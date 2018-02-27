@@ -6,21 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  private currentDate:Date;
-  private currentDateString:string;
+  private inputData:any;
+  
   constructor() { 
-    this.currentDate = new Date();
-    this.currentDateString = this.currentDateToString();
-    console.log(this.currentDateString)
+
   }
-  currentDateToString():string{
-    let date = this.currentDate;
-    return `${date.getMonth()+1}-${date.getDate()}-${date.getFullYear()}`;
-  }
+
   ngOnInit() {
 
   }
-  private dateChanged(e){
-    console.log(this.currentDateString)
+  private formSubmitted(event:any){
+    this.inputData = event;
   }
+
 }

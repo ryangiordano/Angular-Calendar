@@ -1,24 +1,2 @@
-<form class="card border-primary col-md-8" novalidate >
-  <div class="card-header">
-    <legend>Calendar Inputs</legend>
-  </div>
-<div class="card-body">
-  <div class="form-group row">
-    <label for="startDate" class="col-sm-2 col-form-label">Start Date</label>
-    <div class="col-sm-10">
-      <input type="date" required name="startDate" placeholder="Enter a valid date" class="form-control" [(ngModel)]="currentDateString" [value]="currentDateString" (change)="dateChanged($event)" id="startDate" >
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputEmail1">Number of Days</label>
-    <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Number of Days to Show on the Calendar">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Country Code</label>
-    <input type="string" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-</div>
-   
-
-
-</form>
+<app-form (submitForm)="formSubmitted($event)"></app-form> 
+<app-canvas *ngIf="inputData"></app-canvas>

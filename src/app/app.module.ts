@@ -5,13 +5,17 @@ import {FormsModule} from '@angular/forms';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { FormComponent } from './calendar/form/form.component';
+import { CanvasComponent } from './calendar/canvas/canvas.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    CalendarComponent
+    CalendarComponent,
+    FormComponent,
+    CanvasComponent
   ],
   imports: [
     BrowserModule,
