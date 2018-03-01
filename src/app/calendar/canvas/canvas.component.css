@@ -3,7 +3,11 @@
     height:100%;
     width:100%;
     padding:5px;
-    margin:2px;
+    
+    
+}
+.cel{
+    margin:10px 0;
 }
 .weekend{
     background-color:#ffff80;
@@ -17,7 +21,15 @@
 .invalid{
     background-color:#bfbfbf;
 }
+.holiday{
+    background-color:rgb(212, 106, 212);
+}
 td{
     border:2px solid white;;
+    transition:all .5s ease;
 
+}
+td:hover{
+    transition:all .2s ease;
+    opacity:.5;
 }

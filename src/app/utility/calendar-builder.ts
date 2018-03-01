@@ -1,10 +1,14 @@
 import { CalendarData } from "./CalendarData";
+let Holidays = require('date-holidays');
 
 export class CalendarBuilder {
     public calendar: Calendar;
     private startDate:Date;
     private endDate:Date;
+    private hd:any;
     constructor(data:CalendarData) {
+        this.hd = new Holidays();
+        this.hd.init(data.countryCode);
 
         this.startDate = new Date(data.date);
         this.startDate.setDate(this.startDate.getDate()+1)
@@ -25,7 +29,6 @@ export class CalendarBuilder {
         let currentDate = new Date(this.startDate);
 
         currentDate.setDate(1);
-        console.log(currentDate,this.startDate)
         while (currentDate <= this.endDate) {
             this.createCalendarMonth(currentDate);
             currentDate.setMonth(currentDate.getMonth() + 1);
@@ -82,11 +85,28 @@ export class CalendarBuilder {
                     if (d.date > startDate && d.date < endDate) {
                         d.isSelected = true;
                     }
+                    if(this.isHoliday(d.date)){
+                        d.holiday = true;
+                        d.holidayName=this.getHoliday(d.date).name;
+                    }
                 })
 
             })
         })
     }
+    public getHolidaysFor(year:number){
+        return this.hd.getHolidays(year);
+      }
+      public isHoliday(date:Date){
+        if(this.hd.isHoliday(date)){
+          return true;
+        }else{
+          return false;
+        }
+      }
+      public getHoliday(date:string){
+        return this.hd.isHoliday(date);
+      }
 }
 export class Calendar {
     constructor(public months?: Month[]) {
@@ -111,6 +131,7 @@ export class Day {
     public holiday: boolean;
     public isSelected:boolean;
     public invalid:boolean;
+    public holidayName:string;
     constructor(public date?:any) {
         
         this.date = date;

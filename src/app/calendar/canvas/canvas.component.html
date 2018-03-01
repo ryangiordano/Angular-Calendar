@@ -2,7 +2,7 @@
     <h3>{{data.numberOfDays}} day Example: </h3>
     <div class="row" >
        
-      <div class="col-md-4" *ngFor="let month of calendar">
+      <div class="col-md-4 cel" *ngFor="let month of calendar">
         <div class="calendar">
             {{month.name}} {{month.year}}
           <table class="table">
@@ -30,7 +30,7 @@
               </th>
             </tr>
             <tr *ngFor="let week of month.weeks">
-                <td *ngFor="let day of week.days" [class.invalid]="day.invalid"[class.weekday]="!day.weekend && !day.invalid"[class.weekend]="day.weekend"  [class.selected]="day.isSelected">{{day.dateNumber}}</td>
+                <td *ngFor="let day of week.days"[title]="day.holidayName || day.date" [class.holiday]="day.holiday"[class.invalid]="day.invalid"[class.weekday]="!day.weekend && !day.invalid"[class.weekend]="day.weekend"  [class.selected]="day.isSelected">{{day.dateNumber}}</td>
             </tr>
           </table>
         </div>

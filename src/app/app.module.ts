@@ -1,7 +1,10 @@
-import { CalendarDataService } from './calendar/services/calendar-data.service';
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
+
+import { HolidaysService } from './utilities/holidays.service';
+import { CalendarDataService } from './calendar/services/calendar-data.service';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
