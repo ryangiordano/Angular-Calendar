@@ -3,18 +3,18 @@ let Holidays = require('date-holidays');
 
 export class CalendarBuilder {
     public calendar: Calendar;
-    private startDate:Date;
-    private endDate:Date;
-    private hd:any;
-    constructor(data:CalendarData) {
+    private startDate: Date;
+    private endDate: Date;
+    private hd: any;
+    constructor(data: CalendarData) {
         this.hd = new Holidays();
         this.hd.init(data.countryCode);
 
         this.startDate = new Date(data.date);
-        this.startDate.setDate(this.startDate.getDate()+1)
-    
+        this.startDate.setDate(this.startDate.getDate() + 1)
+
         let days = data.numberOfDays;
-        this.endDate = new Date(this.startDate.getFullYear(),this.startDate.getMonth(),this.startDate.getDate()+days);
+        this.endDate = new Date(this.startDate.getFullYear(), this.startDate.getMonth(), this.startDate.getDate() + days);
 
         this.calendar = new Calendar();
     }
@@ -35,7 +35,7 @@ export class CalendarBuilder {
         }
         this.setSelectedDays(this.startDate, this.endDate);
     }
-    
+
     private createCalendarMonth(startDate?: Date) {
         const date = startDate,
             year = date.getFullYear(),
@@ -63,10 +63,10 @@ export class CalendarBuilder {
 
             newDate.setDate(i);
 
-            
+
             week.days.push(new Day(newDate));
             if (i >= daysInMonth) {
-                while(week.days.length<7){
+                while (week.days.length < 7) {
                     week.days.push(new Day());
                 }
                 month.weeks.push(week);
@@ -78,35 +78,35 @@ export class CalendarBuilder {
 
     }
     private setSelectedDays(startDate: Date, endDate: Date) {
-        startDate.setDate(startDate.getDate()-1);
+        startDate.setDate(startDate.getDate() - 1);
         this.calendar.months.forEach(m => {
             m.weeks.forEach(week => {
                 week.days.map(d => {
                     if (d.date > startDate && d.date < endDate) {
                         d.isSelected = true;
                     }
-                    if(this.isHoliday(d.date)){
+                    if (this.isHoliday(d.date)) {
                         d.holiday = true;
-                        d.holidayName=this.getHoliday(d.date).name;
+                        d.holidayName = this.getHoliday(d.date).name;
                     }
                 })
 
             })
         })
     }
-    public getHolidaysFor(year:number){
+    public getHolidaysFor(year: number) {
         return this.hd.getHolidays(year);
-      }
-      public isHoliday(date:Date){
-        if(this.hd.isHoliday(date)){
-          return true;
-        }else{
-          return false;
+    }
+    public isHoliday(date: Date) {
+        if (this.hd.isHoliday(date)) {
+            return true;
+        } else {
+            return false;
         }
-      }
-      public getHoliday(date:string){
+    }
+    public getHoliday(date: string) {
         return this.hd.isHoliday(date);
-      }
+    }
 }
 export class Calendar {
     constructor(public months?: Month[]) {
@@ -129,20 +129,20 @@ export class Day {
     public dateNumber: number;
     public weekend: boolean;
     public holiday: boolean;
-    public isSelected:boolean;
-    public invalid:boolean;
-    public holidayName:string;
-    constructor(public date?:any) {
-        
+    public isSelected: boolean;
+    public invalid: boolean;
+    public holidayName: string;
+    constructor(public date?: any) {
+
         this.date = date;
-        if(date !=undefined){
-            
+        if (date != undefined) {
+
             this.dateNumber = date.getDate();
             this.weekend = date.getDay() == 0 || date.getDay() == 6;
-        }else{
-            
-           this.date = {};
-           this.invalid = true;
+        } else {
+
+            this.date = {};
+            this.invalid = true;
         }
 
 
