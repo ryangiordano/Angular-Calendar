@@ -1,5 +1,7 @@
-<div *ngIf="data!=undefined">
-    <h3>{{data.numberOfDays}} day Example: </h3>
+<div *ngIf="data!=undefined" >
+    <div class="title">
+      <h3>Spanning {{data.numberOfDays}} day(s)</h3>
+    </div>
     <div class="row" >
        
       <div class="col-md-4 cel" *ngFor="let month of calendar">

@@ -1,11 +1,14 @@
 import { CalendarData } from "./CalendarData";
-let Holidays = require('date-holidays');
+import * as Holidays from 'date-holidays';
 
+/** 
+ * Builds a calendar that holds an array of months.
+*/
 export class CalendarBuilder {
     public calendar: Calendar;
-    private startDate: Date;
-    private endDate: Date;
-    private hd: any;
+    public startDate: Date;
+    public endDate: Date;
+    private hd: Holidays;
     constructor(data: CalendarData) {
         this.hd = new Holidays();
         this.hd.init(data.countryCode);
@@ -19,16 +22,13 @@ export class CalendarBuilder {
         this.calendar = new Calendar();
     }
 
-    public monthToString(month: number) {
-        const monthNames = ["January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
-        ];
-        return monthNames[month];
-    }
     public createCalendars() {
         let currentDate = new Date(this.startDate);
 
         currentDate.setDate(1);
+        /**
+         * Increment current date until we've got all the months we need to render.
+         */
         while (currentDate <= this.endDate) {
             this.createCalendarMonth(currentDate);
             currentDate.setMonth(currentDate.getMonth() + 1);
@@ -46,7 +46,9 @@ export class CalendarBuilder {
         let nonMonthDaysInserted: boolean = false,
             week = new Week();
 
-
+        /**
+         * We iterate over all of the days in the month, starting with the days that would appear on the calendar, but are not part of that month (hence, adding the value of the first day)
+         */
         for (let i = 1; i <= daysInMonth + firstDay; i++) {
             if (!nonMonthDaysInserted) {
                 for (let x = 0; x <= firstDay; x++) {
@@ -55,10 +57,18 @@ export class CalendarBuilder {
                 }
             }
             nonMonthDaysInserted = true;
+
+            /**
+             * Once we've made a 7 day week, we reset the week object to a new Week.
+             */
             if (week.days.length % 7 == 0) {
                 month.weeks.push(week);
                 week = new Week();
             }
+
+            /** 
+             * Create and add a date object to the week's day's array.
+            */
             let newDate = new Date(date.getFullYear(), date.getMonth(), i);
 
             newDate.setDate(i);
@@ -66,6 +76,9 @@ export class CalendarBuilder {
 
             week.days.push(new Day(newDate));
             if (i >= daysInMonth) {
+                /**
+                 * This is to fill out the rest of a calendar. After the last day is rendered, we add more grey days to represent the next month's days.
+                 */
                 while (week.days.length < 7) {
                     week.days.push(new Day());
                 }
@@ -77,6 +90,11 @@ export class CalendarBuilder {
         this.calendar.months.push(month);
 
     }
+    /**
+     * Paints the days in the range as "selected" and or "holiday".
+     * @param startDate 
+     * @param endDate 
+     */
     private setSelectedDays(startDate: Date, endDate: Date) {
         startDate.setDate(startDate.getDate() - 1);
         this.calendar.months.forEach(m => {
@@ -94,17 +112,27 @@ export class CalendarBuilder {
             })
         })
     }
-    public getHolidaysFor(year: number) {
+    private monthToString(month: number) {
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        return monthNames[month];
+    }
+    /**
+     * Utility methods for the holiday library.
+     * @param year 
+     */
+    private getHolidaysFor(year: number) {
         return this.hd.getHolidays(year);
     }
-    public isHoliday(date: Date) {
+    private isHoliday(date: Date) {
         if (this.hd.isHoliday(date)) {
             return true;
         } else {
             return false;
         }
     }
-    public getHoliday(date: string) {
+    private getHoliday(date: string) {
         return this.hd.isHoliday(date);
     }
 }
@@ -125,6 +153,9 @@ export class Week {
         this.days = days || new Array<Day>();
     }
 }
+/**
+ * Creating a day without an explicit date simply creates an empty object with the property "invalid" set to true.  This helps us identify "grey" days on a calendar that don't belong to the specific month.
+ */
 export class Day {
     public dateNumber: number;
     public weekend: boolean;

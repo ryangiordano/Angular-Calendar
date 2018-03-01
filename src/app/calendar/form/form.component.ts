@@ -2,6 +2,9 @@ import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import {CalendarData} from '../../utility/CalendarData';
 import { CalendarDataService } from '../services/calendar-data.service';
 import { Subscription } from 'rxjs/Subscription';
+/** 
+ * I decided to use a service to communicate with sibling children of CalendarComponent. It's easier than going back up to the parent and down to the child again.  Plus we can tap into the awesome power of observables.
+*/
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -15,7 +18,7 @@ export class FormComponent implements OnInit {
   private subscription:Subscription;
   public formData:CalendarData = {
     date:"11-02-2018",
-    numberOfDays:0,
+    numberOfDays:1,
     countryCode:"US"
   };
   constructor(private calendarService:CalendarDataService) { 
@@ -33,11 +36,7 @@ export class FormComponent implements OnInit {
 
   ngOnInit() {
   }
-  private emitFormSubmit(){
-    // this.submitForm.emit(this.formData);
+  public emitFormSubmit(){
     this.calendarService.updateCalendar(this.formData);
-  }
-  private dateChanged(e){
-    // console.log(this.formData.date)
   }
 }
