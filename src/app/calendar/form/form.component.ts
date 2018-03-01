@@ -1,5 +1,7 @@
 import { Component, OnInit, Output,EventEmitter } from '@angular/core';
-
+import {CalendarData} from '../../utility/CalendarData';
+import { CalendarDataService } from '../services/calendar-data.service';
+import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -10,16 +12,19 @@ export class FormComponent implements OnInit {
   submitForm:EventEmitter<any>;
 
   private currentDate:Date;
-
-  public formData:any = {
+  private subscription:Subscription;
+  public formData:CalendarData = {
     date:"11-02-2018",
     numberOfDays:0,
     countryCode:"US"
   };
-  constructor() { 
+  constructor(private calendarService:CalendarDataService) { 
     this.currentDate = new Date();
     this.formData.date = this.currentDateToString();
     this.submitForm = new EventEmitter();
+
+
+
   }
   private currentDateToString():string{
     let date = this.currentDate;
@@ -29,9 +34,10 @@ export class FormComponent implements OnInit {
   ngOnInit() {
   }
   private emitFormSubmit(){
-    this.submitForm.emit(this.formData);
+    // this.submitForm.emit(this.formData);
+    this.calendarService.updateCalendar(this.formData);
   }
   private dateChanged(e){
-    console.log(this.formData.date)
+    // console.log(this.formData.date)
   }
 }

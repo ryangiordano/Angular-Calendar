@@ -1,3 +1,4 @@
+import { CalendarDataService } from './calendar/services/calendar-data.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
@@ -21,7 +22,7 @@ import { CanvasComponent } from './calendar/canvas/canvas.component';
     BrowserModule,
     FormsModule
   ],
-  providers: [],
+  providers: [CalendarDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

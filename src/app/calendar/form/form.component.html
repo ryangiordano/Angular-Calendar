@@ -1,4 +1,4 @@
-<form class="card border-primary" novalidate >
+<form class="card border-primary" name="calendarForm" #calendarForm="ngForm" novalidate >
     <div class="card-header">
       <legend>Calendar Inputs</legend>
     </div>
@@ -8,25 +8,25 @@
         <div class=" col-md-4">
             <label for="startDate" class="">Start Date</label>
   
-              <input type="date" required name="startDate" placeholder="Enter a valid date" class="form-control" [(ngModel)]="formData.date" [value]="formData.date" (change)="dateChanged($event)" ng-pattern="MM-dd-yyyy" id="startDate" >
+              <input type="date" required name="startDate" placeholder="Enter a valid date" class="form-control" [(ngModel)]="formData.date"  (change)="dateChanged($event)" ng-pattern="MM-dd-yyyy" id="startDate" >
    
           </div>
   
         <div class=" col-md-4">
           <label for="numberOfDays">Number of Days</label>
-          <input type="number" class="form-control"[(ngModel)]="formData.numberOfDays" name="numberOfDays" id="numberOfDays" placeholder="Number of Days to Show on the Calendar">
+          <input type="number" required class="form-control"[(ngModel)]="formData.numberOfDays" name="numberOfDays" id="numberOfDays" placeholder="Number of Days to Show on the Calendar">
         </div>
   
   
   
         <div class=" col-md-4">
           <label for="countryCode">Country Code</label>
-          <input type="text" name="countryCode" class="form-control" id="countryCode" [(ngModel)]="formData.countryCode"placeholder="Country Code">
+          <input type="text" required name="countryCode" class="form-control" id="countryCode" [(ngModel)]="formData.countryCode"placeholder="Country Code">
         </div>
       </div>
   <br>
   
-    <button class="btn btn-submit" (click)="emitFormSubmit(formData)">
+    <button class="btn btn-submit" (click)="emitFormSubmit(formData)"[disabled]="!calendarForm.valid || calendarForm.pristine">
       Generate Calendars
     </button>
   </div>

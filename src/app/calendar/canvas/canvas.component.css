@@ -1,0 +1,23 @@
+.calendar{
+    background:#ededed;
+    height:100%;
+    width:100%;
+    padding:5px;
+    margin:2px;
+}
+.weekend{
+    background-color:#ffff80;
+}
+.weekday{
+    background-color:#31db64;
+}
+.selected{
+    background-color:#ffac84;
+}
+.invalid{
+    background-color:#bfbfbf;
+}
+td{
+    border:2px solid white;;
+
+}

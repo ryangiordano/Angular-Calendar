@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import { CalendarData } from '../utility/CalendarData';
 
 @Component({
   selector: 'app-calendar',
@@ -6,8 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  private inputData:any;
-  
+  private inputData:CalendarData;
+
   constructor() { 
 
   }
@@ -15,7 +16,7 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
 
   }
-  private formSubmitted(event:any){
+  private formSubmitted(event:CalendarData){
     this.inputData = event;
   }
 
